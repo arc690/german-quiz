@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>German Language Quiz</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            color: #00bfa5;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 48px;
+            margin-top: 8px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        .options button {
+            margin-bottom: 16px;
+            padding: 12px 32px;
+            background-color: #00bfa5;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #027c6b;
+        }
+
+        .score {
+            font-weight: bold;
+            margin-top: 32px;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        .character {
+            width: 200px;
+            height: 200px;
+            background-image: url('character.png'); /* Replace with your character image */
+            background-size: cover;
+            margin-left: 24px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .intro-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #00bfa5, rgb(0, 175, 152));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .logo {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .intro-section.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="intro-section">
+        <img src="your-logo.png" alt="Logo" class="logo">
+    </div>
+    <script>
+        // Function to hide the intro section after a certain duration
+        function hideIntroSection() {
+            const introSection = document.querySelector('.intro-section');
+            introSection.classList.add('hide');
+        }
+
+        // Hide the intro section after 5 seconds (5000 milliseconds)
+        setTimeout(hideIntroSection, 5000);
+
+    </script>
+    <div class="container">
+        <h1>German Language Quiz</h1>
+        <div class="question">
+            <p id="questionText">Was ist das deutsche Wort für "house"?</p>
+            <p class="emoji">🏠</p>
+        </div>
+        <div class="options">
+            <button onclick="checkAnswer('a')">Haus</button>
+            <button onclick="checkAnswer('b')">Auto</button>
+            <button onclick="checkAnswer('c')">Buch</button>
+            <button onclick="checkAnswer('d')">Stuhl</button>
+        </div>
+        <p id="scoreText" class="score"></p>
+    </div>
+
+    <div class="character"></div>
+
+    <script>
+        const levels = [
+            {
+                level: 1,
+                questions: [
+                    {
+                        question: "Was ist das deutsche Wort für 'house'?",
+                        emoji: "🏠",
+                        options: {
+                            a: "Haus",
+                            b: "Auto",
+                            c: "Buch",
+                            d: "Stuhl"
+                        },
+                        answer: "a"
+                    },
+                    {
+                        question: "Welches Wort bedeutet 'Tisch' auf Deutsch?",
+                        emoji: "🪑",
+                        options: {
+                            a: "Stuhl",
+                            b: "Bett",
+                            c: "Tisch",
+                            d: "Schrank"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Äquivalent für 'goodbye'?",
+                        emoji: "👋",
+                        options: {
+                            a: "Hallo",
+                            b: "Auf Wiedersehen",
+                            c: "Danke",
+                            d: "Bitte"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Welches Wort bedeutet 'Hund' auf Deutsch?",
+                        emoji: "🐶",
+                        options: {
+                            a: "Katze",
+                            b: "Hund",
+                            c: "Vogel",
+                            d: "Fisch"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'rot'?",
+                        emoji: "🔴",
+                        options: {
+                            a: "Blau",
+                            b: "Grün",
+                            c: "Rot",
+                            d: "Gelb"
+                        },
+                        answer: "c"
+                    }
+                ]
+            },
+            {
+                level: 2,
+                questions: [
+                    {
+                        question: "Welches Wort bedeutet 'Apfel' auf Deutsch?",
+                        emoji: "🍎",
+                        options: {
+                            a: "Apfel",
+                            b: "Birne",
+                            c: "Banane",
+                            d: "Orange"
+                        },
+                        answer: "a"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'Schule'?",
+                        emoji: "🏫",
+                        options: {
+                            a: "Haus",
+                            b: "Buch",
+                            c: "Schule",
+                            d: "Auto"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Äquivalent für 'thank you'?",
+                        emoji: "🙏",
+                        options: {
+                            a: "Ja",
+                            b: "Nein",
+                            c: "Danke",
+                            d: "Bitte"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Welches Wort bedeutet 'Mutter' auf Deutsch?",
+                        emoji: "👩‍👧",
+                        options: {
+                            a: "Vater",
+                            b: "Mutter",
+                            c: "Kind",
+                            d: "Großmutter"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'klein'?",
+                        emoji: "🔎",
+                        options: {
+                            a: "Groß",
+                            b: "Klein",
+                            c: "Hoch",
+                            d: "Niedrig"
+                        },
+                        answer: "b"
+                    }
+                ]
+            },
+            {
+                level: 3,
+                questions: [
+                    {
+                        question: "Was ist das deutsche Wort für 'Wasser'?",
+                        emoji: "💧",
+                        options: {
+                            a: "Feuer",
+                            b: "Luft",
+                            c: "Wasser",
+                            d: "Erde"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'Auto'?",
+                        emoji: "🚗",
+                        options: {
+                            a: "Fahrrad",
+                            b: "Zug",
+                            c: "Auto",
+                            d: "Flugzeug"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Äquivalent für 'hello'?",
+                        emoji: "👋",
+                        options: {
+                            a: "Auf Wiedersehen",
+                            b: "Danke",
+                            c: "Hallo",
+                            d: "Bitte"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Welches Wort bedeutet 'Schlüssel' auf Deutsch?",
+                        emoji: "🔑",
+                        options: {
+                            a: "Fenster",
+                            b: "Tür",
+                            c: "Schlüssel",
+                            d: "Licht"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'schwarz'?",
+                        emoji: "⚫️",
+                        options: {
+                            a: "Weiß",
+                            b: "Grau",
+                            c: "Schwarz",
+                            d: "Braun"
+                        },
+                        answer: "c"
+                    }
+                ]
+            },
+            {
+                level: 4,
+                questions: [
+                    {
+                        question: "Welches Wort bedeutet 'Stadt' auf Deutsch?",
+                        emoji: "🏙️",
+                        options: {
+                            a: "Land",
+                            b: "Haus",
+                            c: "Stadt",
+                            d: "Fluss"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'Himmel'?",
+                        emoji: "☁️",
+                        options: {
+                            a: "Wolke",
+                            b: "Sonne",
+                            c: "Himmel",
+                            d: "Regen"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Was ist das deutsche Äquivalent für 'good morning'?",
+                        emoji: "☀️",
+                        options: {
+                            a: "Guten Abend",
+                            b: "Guten Morgen",
+                            c: "Gute Nacht",
+                            d: "Hallo"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Welches Wort bedeutet 'Essen' auf Deutsch?",
+                        emoji: "🍽️",
+                        options: {
+                            a: "Trinken",
+                            b: "Essen",
+                            c: "Schlafen",
+                            d: "Spielen"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Was ist das deutsche Wort für 'Freund'?",
+                        emoji: "👫",
+                        options: {
+                            a: "Bruder",
+                            b: "Freund",
+                            c: "Schwester",
+                            d: "Eltern"
+                        },
+                        answer: "b"
+                    }
+                ]
+            }
+        ];
+
+        let currentLevelIndex = 0;
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const currentLevel = levels[currentLevelIndex];
+            const currentQuestion = currentLevel.questions[currentQuestionIndex];
+
+            const questionText = document.getElementById("questionText");
+            questionText.innerHTML = currentQuestion.question;
+
+            const emoji = document.querySelector(".emoji");
+            emoji.innerHTML = currentQuestion.emoji;
+
+            const optionsContainer = document.querySelector(".options");
+            optionsContainer.innerHTML = "";
+
+            for (const option in currentQuestion.options) {
+                const button = document.createElement("button");
+                button.textContent = currentQuestion.options[option];
+                button.setAttribute("onclick", `checkAnswer('${option}')`);
+                optionsContainer.appendChild(button);
+            }
+        }
+
+        function checkAnswer(selectedOption) {
+            const currentLevel = levels[currentLevelIndex];
+            const currentQuestion = currentLevel.questions[currentQuestionIndex];
+
+            if (selectedOption === currentQuestion.answer) {
+                score++;
+            }
+
+            if (currentQuestionIndex < currentLevel.questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                if (currentLevelIndex < levels.length - 1) {
+                    const continueLearning = confirm("Herzlichen Glückwunsch! Du hast Level " + currentLevel.level + " abgeschlossen. Möchtest du weiter Deutsch lernen?");
+                    if (continueLearning) {
+                        currentQuestionIndex = 0;
+                        currentLevelIndex++;
+                        displayQuestion();
+                    } else {
+                        showScore();
+                    }
+                } else {
+                    showScore();
+                }
+            }
+        }
+
+        function showScore() {
+            const container = document.querySelector(".container");
+            const scoreText = document.getElementById("scoreText");
+            scoreText.textContent = "Quiz beendet!\nDein Ergebnis: " + score + " von " + getTotalQuestionsCount();
+            scoreText.style.display = "block";
+        }
+
+        function getTotalQuestionsCount() {
+            let totalQuestionsCount = 0;
+            for (const level of levels) {
+                totalQuestionsCount += level.questions.length;
+            }
+            return totalQuestionsCount;
+        }
+
+        displayQuestion();
+    </script>
+</body>
+
+</html>
